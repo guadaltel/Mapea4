@@ -473,7 +473,7 @@ export default class OLChart extends OLStyleRegularShape {
           context.save();
           context.beginPath();
           context.rect(0, 0, 2 * c, 2 * c);
-          context.arc(c, c, this.radius_ * step * this.donutratio_, 0, 2 * Math.PI);
+          context.arc(c, c, this.radius_ * step * this.donutRatio_, 0, 2 * Math.PI);
           context.clip('evenodd');
         }
 
@@ -494,7 +494,7 @@ export default class OLChart extends OLStyleRegularShape {
           context.beginPath();
           context.strokeStyle = strokeStyle;
           context.lineWidth = strokeWidth;
-          context.arc(c, c, this.radius_ * step * this.donutratio_, Math.PI * (step - 1.5), a0);
+          context.arc(c, c, this.radius_ * step * this.donutRatio_, Math.PI * (step - 1.5), a0);
           context.stroke();
         }
         context.restore();
