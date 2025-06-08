@@ -3,8 +3,11 @@ package es.juntadeandalucia.mapea.api;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
@@ -226,8 +229,24 @@ public class Proxy {
 	 * @param url URL of the request
 	 * @param op  type of mapea operation
 	 */
-	private void checkRequest(String url) {
-		// TODO comprobar
+	private boolean checkRequest(String url) {
+		Pattern ipPattern = Pattern.compile("(?i)(//|%2[Ff])(?:\\d{1,3}\\.){3}\\d{1,3}");
+		Matcher matcher = ipPattern.matcher(url);
+		if (matcher.find()) {
+			return false;
+		}
+	
+		// Obtener las palabras clave peligrosas de la configuración
+		String dangerousKeywordsStr = configProperties.getString("dangerous.keywords");
+		List<String> dangerousKeywords = Arrays.asList(dangerousKeywordsStr.split(","));
+
+		for (String keyword : dangerousKeywords) {
+			if (url.toLowerCase().contains(keyword.toLowerCase())) {
+				return false;
+			}
+		}
+
+	    return true;
 	}
 
 	/**
