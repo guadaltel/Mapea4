@@ -73,15 +73,18 @@ public class Proxy {
 		String response;
 		ProxyResponse proxyResponse;
 		try {
-			this.checkRequest(url);
-			if (method.equalsIgnoreCase("GET")) {
-				proxyResponse = this.get(url, ticket);
-			} else if (method.equalsIgnoreCase("POST")) {
-				proxyResponse = this.post(url);
+			if (this.checkRequest(url)) {
+				if (method.equalsIgnoreCase("GET")) {
+					proxyResponse = this.get(url, ticket);
+				} else if (method.equalsIgnoreCase("POST")) {
+					proxyResponse = this.post(url);
+				} else {
+					proxyResponse = this.error(url, "Method ".concat(method).concat(" not supported"));
+				}
+				this.checkResponse(proxyResponse, url);
 			} else {
-				proxyResponse = this.error(url, "Method ".concat(method).concat(" not supported"));
+				proxyResponse = this.error(url, new IOException("Not allowed proxy request"));
 			}
-			this.checkResponse(proxyResponse, url);
 		} catch (HttpException e) {
 			// TODO Auto-generated catch block
 			proxyResponse = this.error(url, e);
@@ -112,20 +115,23 @@ public class Proxy {
 		ProxyResponse proxyResponse;
 
 		try {
-			this.checkRequest(url);
-			proxyResponse = this.get(url, null);
-			this.checkResponseImage(proxyResponse);
-			data = proxyResponse.getData();
-			Header[] headers = proxyResponse.getHeaders();
-			String contentType = null;
-			for (Header header : headers) {
-				String headerName = header.getName();
-				if (headerName.equalsIgnoreCase("content-type")) {
-					contentType = header.getValue().toLowerCase();
-					break;
+			if(this.checkRequest(url)) {
+				proxyResponse = this.get(url, null);
+				this.checkResponseImage(proxyResponse);
+				data = proxyResponse.getData();
+				Header[] headers = proxyResponse.getHeaders();
+				String contentType = null;
+				for (Header header : headers) {
+					String headerName = header.getName();
+					if (headerName.equalsIgnoreCase("content-type")) {
+						contentType = header.getValue().toLowerCase();
+						break;
+					}
 				}
+				response = Response.ok(new ByteArrayInputStream(data), contentType).build();
+			} else {
+				response = Response.status(Status.BAD_REQUEST).entity("Not allowed proxy request").build();
 			}
-			response = Response.ok(new ByteArrayInputStream(data), contentType).build();
 		} catch (HttpException e) {
 			response = Response.status(Status.BAD_REQUEST).build();
 		} catch (IOException e) {
