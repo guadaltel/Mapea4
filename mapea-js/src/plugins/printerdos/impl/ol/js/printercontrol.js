@@ -1081,8 +1081,8 @@ export default class PrinterControl extends M.impl.Control {
     const resolutions = tileGrid.getResolutions();
 
     /** Ticket */
-    if (M.config.ticket != null && encodedLayer.baseURL.indexOf('&ticket') === -1) {
-      encodedLayer.baseURL += `&ticket=${M.config.ticket}`;
+    if (M.config.ticket != null && layerUrl.indexOf('&ticket') === -1) {
+      layerUrl += `&ticket=${M.config.ticket}`;
     }
 
     /**
