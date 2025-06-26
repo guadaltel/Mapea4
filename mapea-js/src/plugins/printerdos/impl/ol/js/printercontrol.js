@@ -1069,7 +1069,7 @@ export default class PrinterControl extends M.impl.Control {
     const tileGrid = layerSource.getTileGrid();
     const style = !M.utils.isNullOrEmpty(layerSource.getStyle) ? layerSource.getStyle() : 'default';
 
-    const layerUrl = layer.url;
+    let layerUrl = layer.url;
     const layerName = layer.name;
     const layerOpacity = olLayer.getOpacity();
     const layerReqEncoding = layerSource.getRequestEncoding();
