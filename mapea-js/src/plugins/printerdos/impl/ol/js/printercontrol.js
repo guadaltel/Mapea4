@@ -391,6 +391,11 @@ export default class PrinterControl extends M.impl.Control {
 
     /** *********************************  */
 
+    /** Ticket */
+    if (M.config.ticket != null && encodedLayer.baseURL.indexOf('&ticket') === -1) {
+      encodedLayer.baseURL += `&ticket=${M.config.ticket}`;
+    }
+
     // defaults
     encodedLayer.customParams = {
       // service: 'WMS',
@@ -1074,6 +1079,11 @@ export default class PrinterControl extends M.impl.Control {
     const matrixSet = layerSource.getMatrixSet();
     const tileSize = tileGrid.getTileSize(zoom);
     const resolutions = tileGrid.getResolutions();
+
+    /** Ticket */
+    if (M.config.ticket != null && encodedLayer.baseURL.indexOf('&ticket') === -1) {
+      encodedLayer.baseURL += `&ticket=${M.config.ticket}`;
+    }
 
     /**
      * @see http: //www.mapfish.org/doc/print/protocol.html#layers-params
