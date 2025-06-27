@@ -393,7 +393,7 @@ export default class PrinterControl extends M.impl.Control {
 
     /** Ticket */
     if (M.config.ticket != null && encodedLayer.baseURL.indexOf('&ticket') === -1) {
-      encodedLayer.baseURL += `&ticket=${M.config.ticket}`;
+      encodedLayer.baseURL = M.utils.addParameters(encodedLayer.baseURL,`ticket=${M.config.ticket}`);
     }
 
     // defaults
@@ -1082,7 +1082,7 @@ export default class PrinterControl extends M.impl.Control {
 
     /** Ticket */
     if (M.config.ticket != null && layerUrl.indexOf('&ticket') === -1) {
-      layerUrl += `&ticket=${M.config.ticket}`;
+      layerUrl = M.utils.addParameters(layerUrl,`ticket=${M.config.ticket}`);
     }
 
     /**
