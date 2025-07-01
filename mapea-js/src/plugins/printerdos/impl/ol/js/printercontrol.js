@@ -441,7 +441,10 @@ export default class PrinterControl extends M.impl.Control {
       if (layer.type === M.layer.type.MVT) {
         features = layer.getFeatures();
       } else {
-        features = olLayer.getSource().getFeatures();
+        features = [];
+        if (olLayer.getSource() != null) {
+          features = olLayer.getSource().getFeatures();
+        }
       }
       const layerName = layer.name;
       const layerOpacity = olLayer.getOpacity();
