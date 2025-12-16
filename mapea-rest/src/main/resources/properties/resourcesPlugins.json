@@ -1130,8 +1130,8 @@
          "versions": [
             {
                "mapea": "6.7.1",
-               "js": "${mapea.url}/plugins/wfstcontrols/wfstcontrols-3.0.7.ol.min.js",
-               "css": "${mapea.url}/plugins/wfstcontrols/wfstcontrols-3.0.7.min.css"
+               "js": "${mapea.url}/plugins/wfstcontrols/wfstcontrols-3.0.6.ol.min.js",
+               "css": "${mapea.url}/plugins/wfstcontrols/wfstcontrols-3.0.6.min.css"
             },
             {
                "mapea": "6.7.0",
